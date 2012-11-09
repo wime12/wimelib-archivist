@@ -11,7 +11,11 @@
                #:wimelib-utilities
                #:wimelib-sqlite3)
   :components ((:file "package")
-               (:file "tables")))
+	       (:file "database")
+               (:file "tables")
+	       (:file "handler-macros")
+	       (:file "data-acquisition")
+	       (:file "server")))
 
 (defpackage #:wimelib-archivist-config (:export #:*base-directory*))
 

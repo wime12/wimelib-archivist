@@ -1,0 +1,89 @@
+(in-package #:wimelib-archivist)
+
+(define-easy-handler (new-address :uri "/archivist/new-address") ()
+  (with-output-to-string (string)
+    (with-html-output (string)
+      (:title "Add a new address")
+      (:form :action "/archivist/add-address" :method "post"
+	     (:p "Line 1 (optional)"
+		 (:input :type "text" :name "line-1-extra" :class "txt"))
+	     (:p "Street and number"
+		 (:input :type "text" :name "line-2-street-and-number" :class "txt"))
+	     (:p "Line 3 (optional)"
+		 (:input :type "text" :name "line-3-extra" :class "txt"))
+	     (:p "Postal code"
+		 (:input :type "text" :name "postal-code" :class "txt"))
+	     (:p "City"
+		 (:input :type "text" :name "city" :class "txt"))
+	     (:p "state-or-province (optional)"
+		 (:input :type "text" :name "state-or-province" :class "txt"))
+	     (:p "country (optional)"
+		 (:input :type "text" :name "country" :class "txt"))
+	     (:p "other-address-details (optional)"
+		 (:input :type "text" :name "other-address-details" :class "txt"))
+	     (:p (:input :type "submit"
+			 :value "Add"
+			 :class "btn"))))))
+
+(define-easy-handler (add-address :uri "/archivist/add-address")
+    ((line-1-extra :init-form "")
+     (line-2-street-and-number :init-form "")
+     (line-3-extra :init-form "")
+     (postal-code :init-form "")
+     (city :init-form "")
+     (state-or-province :init-form "")
+     (country :init-form "")
+     (other-address-details :init-form ""))
+  (with-output-to-string (string)
+    (with-db *database*
+      (insert-da
+       (make-instance 'address
+		      :address-id :null
+		      :line-1-extra line-1-extra
+		      :line-2-street-and-number line-2-street-and-number
+		      :line-3-extra line-3-extra
+		      :postal-code postal-code
+		      :city city
+		      :state-or-province state-or-province
+		      :country country
+		      :other-address-details other-address-details)))))
+
+(define-easy-handler (new-sheet-music :uri "/archivist/new-sheet-music") ()
+  (with-output-to-string (string)
+    (with-html-output (string)
+      (:title "Add new sheet music")
+      (:form :action "/archivist/add-sheet-music" :method "post"
+	     (:p "Title"
+		 (:input :type "text" :name "music-title" :class "txt"))
+	     (:p "Date of publication"
+		 (:input :type "text" :name "date-of-publication" :class "txt"))
+	     (:p "ISBN"
+		 (:input :type "text" :name "isbn" :class "txt"))
+	     (:p "Description"
+		 (:input :type "text" :name "music-description" :class "txt"))
+	     (:p "Voices"
+		 (:input :type "text" :name "voices" :class "txt"))
+	     (:p "Additional details"
+		 (:input :type "text" :name "other-sheet-music-details" :class "txt"))
+	     (:p (:input :type "submit"
+			 :value "Add"
+			 :class "btn"))))))
+
+(define-easy-handler (add-sheet-music :uri "/archivist/add-sheet-music")
+    ((music-title :init-form "")
+     (date-of-publication :init-form "")
+     (isbn :init-form "")
+     (music-description :init-form "")
+     (voices :init-form "")
+     (other-sheet-music-details :init-form ""))
+  (with-output-to-string (string)
+    (with-db *database*
+      (insert-da
+       (make-instance 'sheet-music
+		      :sheet-music-id :null
+		      :music-title music-title
+		      :date-of-publication date-of-publication
+		      :isbn isbn
+		      :music-description music-description
+		      :voices voices
+		      :other-sheet-music-details other-sheet-music-details)))))

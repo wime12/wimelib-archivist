@@ -1,0 +1,7 @@
+(in-package #:wimelib-archivist)
+
+(defvar *database*)
+
+(defvar *database-path*
+  (merge-pathnames "data/music-archive.db"
+		   wimelib-archivist-config:*BASE-DIRECTORY*))
