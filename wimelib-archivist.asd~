@@ -1,0 +1,15 @@
+;;;; wimelib-archivist.asd
+
+(asdf:defsystem #:wimelib-archivist
+  :serial t
+  :description "Describe wimelib-archivist here"
+  :author "Your Name <your.name@example.com>"
+  :license "Specify license here"
+  :depends-on (#:hunchentoot
+               #:parenscript
+               #:monkeylib-html
+               #:wimelib-utilities
+               #:wimelib-sqlite3)
+  :components ((:file "package")
+               (:file "wimelib-archivist")))
+

@@ -34,28 +34,28 @@
   (mapcar #'generate-field field-declarations))
 
 (defun generate-field (field-declaration)
-  (destructuring-bind (label name var-name initarg
+  (destructuring-bind (label name initarg
 			     &key (type "text") (class "txt") (default ""))
       field-declaration
-    (declare (ignore default var-name initarg default))
-    `(:p ,label (:input :type ,type :name ,name :class ,class))))
+    (declare (ignore default initarg default))
+    `(:p ,label (:input :type ,type :name ,(symbol-name name) :class ,class))))
 
 (defun generate-variables (field-declarations)
   (mapcar #'generate-variable field-declarations))
 
 (defun generate-variable (field-declaration)
-  (destructuring-bind (label name var-name initarg
+  (destructuring-bind (label name initarg
 			     &key (type "text") (class "txt") (default ""))
       field-declaration
-    (declare (ignore label name type class initarg))
-    `(,var-name :init-form ,default)))
+    (declare (ignore label type class initarg))
+    `(,name :init-form ,default)))
 
 (defun generate-initialization-arguments (field-declarations)
   (mapcan #'generate-initialization-argument field-declarations))
 
 (defun generate-initialization-argument (field-declaration)
-  (destructuring-bind (label name var-name initarg
+  (destructuring-bind (label name initarg
 			     &key (type "text") (class "txt") (default ""))
       field-declaration
-    (declare (ignore label name type class default))
-    `(,initarg ,var-name)))
+    (declare (ignore label type class default))
+    `(,initarg ,name)))

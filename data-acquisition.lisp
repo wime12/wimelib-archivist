@@ -5,103 +5,46 @@
     (add-address :uri "/archivist/add-address") 
   "Add a new address"
   address
-  ("Line 1 (optional)" "line-1-extra" line-1-extra :line-1-extra :default "")
-  ("Street and number" "line-2-street-and-number" line-2
-		       :line-2-street-and-number :default "")
-  ("Line 3 (optional)" "line-3-extra" line-3-extra :line-3-extra
-		       :default "")
-  ("Postal code" "postal-code" postal-code :postal-code :default "")
-  ("City" "city" city :city :default "")
-  ("State or province" "state-or-province" state-or-province
-		       :state-or-province :default "")
-  ("Country (optional)" "country" country :country :default "")
-  ("Other details" "other-address-details" other-address-details
-		   :other-address-details :default ""))
+  ("Line 1 (optional)" line-1-extra :line-1-extra)
+  ("Street and number" line-2 :line-2-street-and-number)
+  ("Line 3 (optional)" line-3-extra :line-3-extra)
+  ("Postal code" postal-code :postal-code)
+  ("City" city :city)
+  ("State or province" state-or-province :state-or-province)
+  ("Country (optional)" country :country)
+  ("Other details" other-address-details :other-address-details))
 
-#+nil(define-easy-handler (new-address :uri "/archivist/new-address") ()
-  (with-output-to-string (string)
-    (with-html-output (string)
-      (:title "Add a new address")
-      (:form :action "/archivist/add-address" :method "post"
-	     (:p "Line 1 (optional)"
-		 (:input :type "text" :name "line-1-extra" :class "txt"))
-	     (:p "Street and number"
-		 (:input :type "text" :name "line-2-street-and-number" :class "txt"))
-	     (:p "Line 3 (optional)"
-		 (:input :type "text" :name "line-3-extra" :class "txt"))
-	     (:p "Postal code"
-		 (:input :type "text" :name "postal-code" :class "txt"))
-	     (:p "City"
-		 (:input :type "text" :name "city" :class "txt"))
-	     (:p "state-or-province (optional)"
-		 (:input :type "text" :name "state-or-province" :class "txt"))
-	     (:p "country (optional)"
-		 (:input :type "text" :name "country" :class "txt"))
-	     (:p "other-address-details (optional)"
-		 (:input :type "text" :name "other-address-details" :class "txt"))
-	     (:p (:input :type "submit"
-			 :value "Add"
-			 :class "btn"))))))
+(define-handlers
+    (new-sheet-music :uri "/archivist/new-sheet-music")
+    (add-sheet-music :uri "/archivist/add-sheet-music")
+  "Add new sheet music"
+  sheet-music
+  ("Title" music-title :music-title)
+  ("Data of publication" data-of-publication :data-of-publication)
+  ("ISBN" isbn :isbn)
+  ("Description" music-description :music-description)
+  ("Voices" voices :voices)
+  ("Other details" other-sheet-music-details :other-sheet-music-details))
 
-#+nil(define-easy-handler (add-address :uri "/archivist/add-address")
-    ((line-1-extra :init-form "")
-     (line-2-street-and-number :init-form "")
-     (line-3-extra :init-form "")
-     (postal-code :init-form "")
-     (city :init-form "")
-     (state-or-province :init-form "")
-     (country :init-form "")
-     (other-address-details :init-form ""))
-  (with-output-to-string (string)
-    (with-db *database*
-      (insert-da
-       (make-instance 'address
-		      :address-id :null
-		      :line-1-extra line-1-extra
-		      :line-2-street-and-number line-2-street-and-number
-		      :line-3-extra line-3-extra
-		      :postal-code postal-code
-		      :city city
-		      :state-or-province state-or-province
-		      :country country
-		      :other-address-details other-address-details)))))
+(define-handlers
+    (new-composer :uri "/archivist/new-composer")
+    (add-composer :uri "/archivist/add-composer")
+  "Add a composer"
+  composer
+  ("First name" first-name :first-name)
+  ("Last name" last-name :last-name)
+  ("Other details" other-composer-details :other-composer-details))
 
-(define-easy-handler (new-sheet-music :uri "/archivist/new-sheet-music") ()
-  (with-output-to-string (string)
-    (with-html-output (string)
-      (:title "Add new sheet music")
-      (:form :action "/archivist/add-sheet-music" :method "post"
-	     (:p "Title"
-		 (:input :type "text" :name "music-title" :class "txt"))
-	     (:p "Date of publication"
-		 (:input :type "text" :name "date-of-publication" :class "txt"))
-	     (:p "ISBN"
-		 (:input :type "text" :name "isbn" :class "txt"))
-	     (:p "Description"
-		 (:input :type "text" :name "music-description" :class "txt"))
-	     (:p "Voices"
-		 (:input :type "text" :name "voices" :class "txt"))
-	     (:p "Additional details"
-		 (:input :type "text" :name "other-sheet-music-details" :class "txt"))
-	     (:p (:input :type "submit"
-			 :value "Add"
-			 :class "btn"))))))
-
-(define-easy-handler (add-sheet-music :uri "/archivist/add-sheet-music")
-    ((music-title :init-form "")
-     (date-of-publication :init-form "")
-     (isbn :init-form "")
-     (music-description :init-form "")
-     (voices :init-form "")
-     (other-sheet-music-details :init-form ""))
-  (with-output-to-string (string)
-    (with-db *database*
-      (insert-da
-       (make-instance 'sheet-music
-		      :sheet-music-id :null
-		      :music-title music-title
-		      :date-of-publication date-of-publication
-		      :isbn isbn
-		      :music-description music-description
-		      :voices voices
-		      :other-sheet-music-details other-sheet-music-details)))))
+(define-handlers
+    (new-choir-member :uri "/archivist/new-choir-member")
+    (add-choir-member :uri "/archivist/add-choir-member")
+  "Add a choir member"
+  choir-member
+  ("Gender" gender :gender)
+  ("First name" first-name :first-name)
+  ("Last name" last-name :last-name)
+  ("Date of birth" date-of-birth :date-of-birth)
+  ("E-Mail" e-mail-address :e-mail-address)
+  ("Phone number" phone-number :phone-number)
+  ("Cell phone number" cell-number :cell-number)
+  ("Other details" other-member-details :other-member-details))
